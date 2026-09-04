@@ -69,6 +69,20 @@ struct IPv4Header {
     };
 #pragma pack(pop)
 
+struct PcapDeleter {
+     void operator()(pcap_t* h) const {
+         if (h) { pcap_close(h); }
+        }
+    };
+
+struct PcapIfDeleter {
+     void operator()(pcap_if_t* allD) const {
+         if (allD) { pcap_freealldevs(allD); }
+       }
+    };
+
+
+
  void printMac(const uint8_t* mac);
  void printIPv4(const uint8_t* srcAddr);
  void printIPv6(const uint8_t* addr);
